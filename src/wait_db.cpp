@@ -1,4 +1,7 @@
 #include "wait_db.h"
+#include <xr_log.h>
+#include <if.h>
+#include <xr_ecode.h>
 
 wait_db_t g_wait_db;
 
@@ -45,7 +48,7 @@ void wait_db_t::clear_client( int fd )
 
 void wait_db_t::client_time_out()
 {
-	uint32_t now_sec = g_timer->now_sec();
+	uint32_t now_sec = xr::g_timer->now_sec();
 	for (auto it = this->m_proto_head_map.begin(); this->m_proto_head_map.end() != it;){
 		if (now_sec >= it->second.add_time + this->time_out_sec){
 			xr_server::proto_head_t& proto_head = it->second.head;

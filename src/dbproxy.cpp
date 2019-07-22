@@ -1,6 +1,7 @@
 
 #include "dbproxy.h"
-
+#include "db.h"
+#include "route.h"
 
 dbproxy_t g_dbproxy;
 
@@ -8,7 +9,7 @@ int dbproxy_t::handle_client( xr::tcp_peer_t* peer, const void* data, uint32_t l
 {
     this->head.unpack(data);
 
-    db_mgr_t* db_mgr = g_rotue.find(head.cmd);
+    db_mgr_t* db_mgr = g_rotue.find(this->head.cmd);
 	if (NULL == db_mgr){
 		return xr_server::send_ret(peer, this->head, xr::ECODE_SYS::UNDEFINED_CMD);
 	}

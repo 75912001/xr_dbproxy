@@ -1,7 +1,4 @@
-#include <set>
-
-#include <lib_log.h>
-
+#include <xr_log.h>
 #include "route.h"
 
 route_t g_rotue;
@@ -52,7 +49,7 @@ int route_t::parser()
 			}
 
 			parser_db(cur, xml, &db_mgr);
-			g_rotue.db_mgr.push_back(db_mgr);
+			g_rotue.db_mgr_vec.push_back(db_mgr);
 		}
 		xml.move2next_node();
 	}

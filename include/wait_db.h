@@ -3,6 +3,7 @@
 
 #include <xr_timer.h>
 #include <proto_header.h>
+#include <xr_tcp.h>
 
 struct client_t 
 {
@@ -11,7 +12,7 @@ struct client_t
 	time_t add_time;        
 	client_t(){
 		this->peer = NULL;
-        this->add_time = g_timer->now_sec();
+        this->add_time = xr::g_timer->now_sec();
 	}	
 };
 
@@ -26,7 +27,7 @@ public:
 	}
 
     //生成并保存KEY
-    PROTO_SEQ gen_save_key(xr_server::proto_head_t& proto_head, xr::tcp_peer_t* peer);
+    xr_server::PROTO_SEQ gen_save_key(xr_server::proto_head_t& proto_head, xr::tcp_peer_t* peer);
 	bool find(xr_server::PROTO_SEQ seq, client_t& rci);
 
 	//客户端断开连接时清理对应未返回的等待协议

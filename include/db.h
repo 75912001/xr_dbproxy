@@ -46,7 +46,7 @@ struct db_mgr_t
 {
 	xr_server::PROTO_CMD start;
 	xr_server::PROTO_CMD end;
-	service_mgr_t(){
+	db_mgr_t(){
 		this->start = 0;
 		this->end = 0;
 	}

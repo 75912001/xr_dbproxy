@@ -1,14 +1,13 @@
-
-#include <lib_include.h>
-#include <lib_log.h>
-#include <lib_proto/lib_msgbuf.h>
-#include <lib_err_code.h>
-#include <lib_util.h>
-#include <lib_timer.h>
-#include <bench_conf.h>
+#include <xr_include.h>
+#include <xr_log.h>
+#include <xr_util.h>
+#include <xr_timer.h>
+#include <config.h>
+#include <xr_tcp.h>
 #include "route.h"
-#include "db_service.h"
-#include "dbproxy_timer.h"
+#include "timer.h"
+
+
 #include "wait_db.h"
 #include "dbproxy.h"
 
@@ -21,14 +20,14 @@ extern "C" int on_init()
 		if (0 != g_rotue.parser()){
 			return FAIL;
 		}
-		std::string time_out_sec = g_config->get_val_str("db", "time_out_sec");
+		std::string time_out_sec = xr_server::g_config->get_val_str("db", "time_out_sec");
 		if (!time_out_sec.empty()){
 			uint32_t time_out = 0;
 			xr::string2T(time_out_sec, time_out);
 			g_wait_db.time_out_sec = time_out;
 		}
-		g_dbproxy_timer = new timer_t;
-		g_dbproxy_timer->add_sec(timer_t::clear, NULL, g_timer->now_sec() + 3);
+		g_dbproxy_timer = new dbproxy_timer_t;
+		g_dbproxy_timer->add_sec(dbproxy_timer_t::clear, NULL, xr::g_timer->now_sec() + 3);
 	}
 	return 0;
 }
@@ -46,8 +45,8 @@ extern "C" int on_fini()
 
 extern "C" void on_events()
 {
-	if (!el_async::is_parent()){
-		g_timer->handle_timer();
+	if (!xr_server::is_parent()){
+		xr::g_timer->scan();
 	}
 }
 
@@ -56,13 +55,13 @@ extern "C" void on_cli_conn(xr::tcp_peer_t* peer)
     DEBUG_LOG("[fd:%d]", peer->fd);
 }
 
-extern "C" int on_cli_pkg(xr::tcp_peet_t* peer, const void* data, uint32_t len)
+extern "C" int on_cli_pkg(xr::tcp_peer_t* peer, const void* data, uint32_t len)
 {
 	g_dbproxy.handle_client(peer, data, len);
 	return 0;
 }
 
-extern "C" void on_srv_pkg(xr::tcp_peet_t* peer, const void* data, uint32_t len)
+extern "C" void on_srv_pkg(xr::tcp_peer_t* peer, const void* data, uint32_t len)
 {
 	g_dbproxy.handle_server(peer, data, len);
 }
@@ -78,7 +77,7 @@ extern "C" void on_svr_conn_closed(int fd)
 		db_mgr_t& db_mgr = *it;
 		FOREACH(db_mgr.db_vec, it_2){
 			db_t& db = *it_2;
-			if (NULL == s.peer){
+			if (NULL == db.peer){
 				continue;
 			}
 			
@@ -98,9 +97,9 @@ extern "C" int on_get_pkg_len(xr::tcp_peer_t* peer,
     }
 
 	char* c = (char*)data;
-	PROTO_LEN pkg_len = (PROTO_LEN)(*(PROTO_LEN*)c);
+	xr_server::PROTO_LEN pkg_len = (xr_server::PROTO_LEN)(*(xr_server::PROTO_LEN*)c);
 
-    if (pkg_len < xr_server::proto_head_t::PROTO_HEAD_LEN || pkg_len >= g_bench_conf->page_size_max){
+    if (pkg_len < xr_server::proto_head_t::PROTO_HEAD_LEN || pkg_len >= xr_server::g_config->page_size_max){
         ERROR_LOG("pkg len error |%u", pkg_len);
         return xr::ECODE_SYS::DISCONNECT_PEER;
     }

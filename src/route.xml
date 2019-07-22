@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+最大命令号为0xffff=65535
+-->
+<route>
+    <cmd start="0x0000" end="0x8fff">
+        <db ip="127.0.0.1" port="11001"/>
+        <db ip="127.0.0.1" port="11002"/>
+    </cmd>
+    <cmd start="0x9000" end="0xffff">
+        <db ip="127.0.0.1" port="11009"/>
+    </cmd>
+</route>

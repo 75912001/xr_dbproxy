@@ -4,7 +4,7 @@
 
 #include <xr_timer.h>
 
-class timer_t  : public xr::timer_event_t
+class timer_t : public xr::timer_event_t
 {
 public:
 	timer_t();

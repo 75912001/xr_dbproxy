@@ -6,7 +6,7 @@ CC=g++ -std=c++11
 FLAG=-Wall -fPIC -MMD -shared -g -O2 -o
 
 #包含的头文件
-INCLUDES=-I/usr/include/libxml2/ -I$(XR_PATH)/include -I$(XR_SERVER_PATH)/include -I../include -I../../share
+INCLUDES=-I/usr/include/libxml2/ -I$(XR_PATH)/include -I$(XR_SERVER_PATH)/include -I../include
 
 LINK=-lxml2 -lxr -Wl,-rpath,$(XR_PATH)
 

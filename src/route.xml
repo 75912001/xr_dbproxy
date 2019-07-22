@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--
+偶数消息不需要回包,奇数消息需要回包
 最大命令号为0xffff=65535
 -->
-<route>
+<root>
     <cmd start="0x0000" end="0x8fff">
         <db ip="127.0.0.1" port="11001"/>
         <db ip="127.0.0.1" port="11002"/>
@@ -10,4 +11,4 @@
     <cmd start="0x9000" end="0xffff">
         <db ip="127.0.0.1" port="11009"/>
     </cmd>
-</route>
+</root>

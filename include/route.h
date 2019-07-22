@@ -9,11 +9,11 @@
 
 struct route_t
 {
-	std::vector<db_mgr_t> service_mgr_vec;
 	int parser();
-	inline service_mgr_t* find(CMD_ID cmd){
-		FOREACH(this->service_mgr_vec, it){
-			service_mgr_t& r = *it;
+	std::vector<db_mgr_t> db_mgr_vec;
+	inline db_mgr_t* find(CMD_ID cmd){
+		FOREACH(this->db_mgr_vec, it){
+			db_mgr_t& r = *it;
 			if (r.start <= cmd && cmd <= r.end){
 				return &r;
 			}

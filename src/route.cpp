@@ -14,7 +14,7 @@ namespace {
 				db_t db;
 				xml.get_prop(cur, "ip", db.ip);
 				xml.get_prop(cur, "port", db.port);
-				db_mgr->db_vec.push_back(service);
+				db_mgr->db_vec.push_back(db);
 			}
 			cur = cur->next;
 		}
@@ -34,7 +34,7 @@ int route_t::parser()
 	while(NULL != xml.node_ptr){
 		//取出节点中的内容
 		if (!xmlStrcmp(xml.node_ptr->name, (const xmlChar*)"cmd")){
-			db_mgr_t service_mgr;
+			db_mgr_t db_mgr;
 			xmlNodePtr cur = xml.node_ptr;
 
 			std::string str_start;
@@ -51,8 +51,8 @@ int route_t::parser()
 				return FAIL;
 			}
 
-			parser_ser(cur, xml, &db_mgr);
-			g_rotue_t.db_mgr.push_back(db_mgr);
+			parser_db(cur, xml, &db_mgr);
+			g_rotue.db_mgr.push_back(db_mgr);
 		}
 		xml.move2next_node();
 	}

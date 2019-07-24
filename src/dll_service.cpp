@@ -35,9 +35,9 @@ extern "C" int on_init()
 extern "C" int on_fini()
 {
 	if (xr_server::is_parent()) {
-		DEBUG_LOG("======daemon done======");
+		DEBUG_LOG("======parent done======");
 	}else{
-		DEBUG_LOG("======server done======");
+		DEBUG_LOG("======child done======");
 		SAFE_DELETE(g_dbproxy_timer);
 	}
 	return 0;

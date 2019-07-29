@@ -101,7 +101,7 @@ extern "C" int on_get_pkg_len(xr::tcp_peer_t* peer,
 
     if (pkg_len < xr_server::proto_head_t::PROTO_HEAD_LEN || pkg_len >= xr_server::g_config->page_size_max){
         ERROR_LOG("pkg len error |%u", pkg_len);
-        return xr::ECODE_SYS::DISCONNECT_PEER;
+        return xr::ECODE::DISCONNECT_PEER;
     }
 
     if (len < pkg_len){

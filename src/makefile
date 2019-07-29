@@ -16,7 +16,7 @@ LIBS=-L/usr/lib64 -L/usr/lib -L$(XR_PATH)
 LOCAL_SRCS =$(wildcard ./*.cpp)
 
 $(EXE):
-	rm -f $(EXE)
+	rm -fr $(EXE)
 	rm -f lib$(OBJ_NAME).d
 	$(CC) -ldl -lrt $(LOCAL_SRCS) $(INCLUDES) $(LIBS) $(LINK) $(FLAG) $@ 
 	rm -f lib$(OBJ_NAME).d

@@ -56,7 +56,7 @@ void wait_db_t::client_time_out()
 				proto_head.len, proto_head.cmd, proto_head.seq, 
 				proto_head.ret);
 
-			xr_server::send_ret(it->second.peer, proto_head, xr::ECODE_SYS::TIME_OUT);
+			xr_server::send_ret(it->second.peer, proto_head, xr::ECODE::TIME_OUT);
 
 			this->m_proto_head_map.erase(it++);
 		} else {

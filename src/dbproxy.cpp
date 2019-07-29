@@ -11,7 +11,7 @@ int dbproxy_t::handle_client( xr::tcp_peer_t* peer, const void* data, uint32_t l
 
     db_mgr_t* db_mgr = g_rotue.find(this->head.cmd);
 	if (NULL == db_mgr){
-		return xr_server::send_ret(peer, this->head, xr::ECODE_SYS::UNDEFINED_CMD);
+		return xr_server::send_ret(peer, this->head, xr::ECODE::UNDEFINED_CMD);
 	}
 	this->ret = db_mgr->send(peer, this->head.uid, data, len);
 	if (this->ret < 0){

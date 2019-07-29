@@ -27,7 +27,7 @@ struct db_t
 			//连接
 			this->peer = xr_server::connect(this->ip, this->port);
 			if (NULL == this->peer){
-				return xr::ECODE_SYS::CONNECT_FAIL;
+				return xr::ECODE::CONNECT_FAIL;
 			}
 		}
 		if (1 == g_dbproxy.head.cmd%2){//偶数消息不需要回包,奇数消息需要回包

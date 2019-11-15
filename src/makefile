@@ -20,3 +20,5 @@ $(EXE):
 	rm -f lib$(OBJ_NAME).d
 	$(CC) -ldl -lrt $(LOCAL_SRCS) $(INCLUDES) $(LIBS) $(LINK) $(FLAG) $@ 
 	rm -f lib$(OBJ_NAME).d
+	cp $(EXE) $(XR_SERVER_PATH)
+	rm -f $(EXE)

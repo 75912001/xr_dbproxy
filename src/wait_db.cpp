@@ -1,7 +1,7 @@
 #include "wait_db.h"
 #include <xr_log.h>
 #include <if.h>
-#include <xr_ecode.h>
+#include <xr_error.h>
 
 wait_db_t g_wait_db;
 
@@ -56,7 +56,7 @@ void wait_db_t::client_time_out()
 				proto_head.len, proto_head.cmd, proto_head.seq, 
 				proto_head.ret);
 
-			xr_server::send_ret(it->second.peer, proto_head, xr::ECODE::TIME_OUT);
+			xr_server::send_ret(it->second.peer, proto_head, xr::ERROR::TIME_OUT);
 
 			this->m_proto_head_map.erase(it++);
 		} else {

@@ -4,7 +4,7 @@
 
 #include <xr_tcp.h>
 #include <if.h>
-#include <xr_ecode.h>
+#include <xr_error.h>
 #include "dbproxy.h"
 #include "wait_db.h"
 
@@ -27,7 +27,7 @@ struct db_t
 			//连接
 			this->peer = xr_server::connect(this->ip, this->port);
 			if (NULL == this->peer){
-				return xr::ECODE::CONNECT_FAIL;
+				return xr::ERROR::CONNECT_FAIL;
 			}
 		}
 		if (1 == g_dbproxy.head.cmd%2){//偶数消息不需要回包,奇数消息需要回包
@@ -51,8 +51,8 @@ struct db_mgr_t
 		this->end = 0;
 	}
 
-	inline int send(xr::tcp_peer_t* peer, xr_server::PROTO_UID uid, const void* data, uint32_t len){
-		return this->db_vec[uid%this->db_vec.size()].send(peer, data, len);
+	inline int send(xr::tcp_peer_t* cb_peer, xr_server::PROTO_UID uid, const void* data, uint32_t len){
+		return this->db_vec[uid%this->db_vec.size()].send(cb_peer, data, len);
 	}
 	std::vector<db_t> db_vec;
 };

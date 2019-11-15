@@ -52,7 +52,7 @@ extern "C" void on_events()
 
 extern "C" void on_cli_conn(xr::tcp_peer_t* peer)
 {
-    DEBUG_LOG("[fd:%d]", peer->fd);
+    DEBUG_LOG("fd:%d", peer->fd);
 }
 
 extern "C" int on_cli_pkg(xr::tcp_peer_t* peer, const void* data, uint32_t len)
@@ -101,7 +101,7 @@ extern "C" int on_get_pkg_len(xr::tcp_peer_t* peer,
 
     if (pkg_len < xr_server::proto_head_t::PROTO_HEAD_LEN || pkg_len >= xr_server::g_config->page_size_max){
         ERROR_LOG("pkg len error |%u", pkg_len);
-        return xr::ECODE::DISCONNECT_PEER;
+        return xr::ERROR::DISCONNECT_PEER;
     }
 
     if (len < pkg_len){

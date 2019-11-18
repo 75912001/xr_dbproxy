@@ -2,9 +2,9 @@
 #include "timer.h"
 #include "wait_db.h"
 
-dbproxy_timer_t* g_dbproxy_timer;
+dbproxy_timer_t *g_dbproxy_timer;
 
-int dbproxy_timer_t::clear( void* owner, void* data )
+int dbproxy_timer_t::clear(void *owner, void *data)
 {
 	//处理超时协议返回
 	g_wait_db.client_time_out();

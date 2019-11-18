@@ -3,34 +3,40 @@
 
 route_t g_rotue;
 
-namespace {
-	int parser_db(xmlNodePtr cur, xr::xml_t& xml, db_mgr_t* db_mgr){
-		cur = cur->xmlChildrenNode;
-		while(NULL != cur){
-			if(!xmlStrcmp(cur->name, (const xmlChar*)"db")){
-				db_t db;
-				xml.get_prop(cur, "ip", db.ip);
-				xml.get_prop(cur, "port", db.port);
-				db_mgr->db_vec.push_back(db);
-			}
-			cur = cur->next;
+namespace
+{
+int parser_db(xmlNodePtr cur, xr::xml_t &xml, db_mgr_t *db_mgr)
+{
+	cur = cur->xmlChildrenNode;
+	while (NULL != cur)
+	{
+		if (!xmlStrcmp(cur->name, (const xmlChar *)"db"))
+		{
+			db_t db;
+			xml.get_prop(cur, "ip", db.ip);
+			xml.get_prop(cur, "port", db.port);
+			db_mgr->db_vec.push_back(db);
 		}
-		return 0;
+		cur = cur->next;
 	}
+	return 0;
 }
+} // namespace
 
 int route_t::parser()
 {
 	xr::xml_t xml;
 	int ret = xml.open("./route.xml");
-	if (0 != ret){
+	if (0 != ret)
+	{
 		return ret;
 	}
 
 	xml.move2children_node();
-	while(NULL != xml.node_ptr){
-		//取出节点中的内容
-		if (!xmlStrcmp(xml.node_ptr->name, (const xmlChar*)"cmd")){
+	while (NULL != xml.node_ptr)
+	{
+		if (!xmlStrcmp(xml.node_ptr->name, (const xmlChar *)"cmd"))
+		{
 			db_mgr_t db_mgr;
 			xmlNodePtr cur = xml.node_ptr;
 
@@ -43,7 +49,8 @@ int route_t::parser()
 			xml.get_prop(cur, "end", str_end);
 			db_mgr.end = ::strtoul(str_end.c_str(), 0, 16);
 
-			if (db_mgr.start > db_mgr.end){
+			if (db_mgr.start > db_mgr.end)
+			{
 				assert(0);
 				return FAIL;
 			}

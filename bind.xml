@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<root>
+<!--
+		uint32_t	id;
+		char		name[32];
+		char		ip[16];
+		uint16_t	port;
+		char		data[32];
+-->
+	<server id="1" name="xr_dbproxy" ip="127.0.0.1" port="61001"  data=""/>
+</root>

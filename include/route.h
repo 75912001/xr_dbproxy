@@ -10,10 +10,13 @@ struct route_t
 {
 	int parser();
 	std::vector<db_mgr_t> db_mgr_vec;
-	inline db_mgr_t* find(xr_server::PROTO_CMD cmd){
-		FOREACH(this->db_mgr_vec, it){
-			db_mgr_t& r = *it;
-			if (r.start <= cmd && cmd <= r.end){
+	inline db_mgr_t *find(xr_server::PROTO_CMD cmd)
+	{
+		FOREACH(this->db_mgr_vec, it)
+		{
+			db_mgr_t &r = *it;
+			if (r.start <= cmd && cmd <= r.end)
+			{
 				return &r;
 			}
 		}
